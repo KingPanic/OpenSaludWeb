@@ -7,7 +7,7 @@
     }
 </style>
 
-<h3>Manage users</h3>
+<h3>Manage usuarios</h3>
 
 <RadzenTemplateForm TItem="User" Data="@_user" Submit="@OnSubmit">
     <div class="row" style="text-align:center">
@@ -70,11 +70,11 @@
 <RadzenDataGrid @ref="grid" AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
                 Count="@users.Count" Data="@users" TItem="User" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
     <Columns>
-        <RadzenDataGridColumn TItem="User" Property="Id" Filterable="false" Title="UserId" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
-        <RadzenDataGridColumn TItem="User" Property="EmailAddress" Title="EmailAddress" />
-        <RadzenDataGridColumn TItem="User" Property="FirstName" Title="FirstName" />
-        <RadzenDataGridColumn TItem="User" Property="LastName" Title="LastName" />
-        <RadzenDataGridColumn TItem="User" Property="Role.RoleDesc" Title="Role" />
+        <RadzenDataGridColumn TItem="User" Property="Id" Filterable="false" Title="ID_Usuario" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="User" Property="EmailAddress" Title="Correo" />
+        <RadzenDataGridColumn TItem="User" Property="FirstName" Title="Nombre" />
+        <RadzenDataGridColumn TItem="User" Property="LastName" Title="Apellido" />
+        <RadzenDataGridColumn TItem="User" Property="Role.RoleDesc" Title="Rol" />
     </Columns>
 </RadzenDataGrid>
 @code {

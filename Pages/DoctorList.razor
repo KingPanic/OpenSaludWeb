@@ -1,7 +1,7 @@
 ﻿@page "/doctorlist"
 @using OpenSalud.Data.Models
 
-<h3>DoctorList</h3>
+<h3>Lista de doctores</h3>
 
 <RadzenDataList @ref="grid" WrapItems="true" AllowPaging="true" Data="@doctors" TItem="Doctor" PageSize="6">
     <Template Context="doctor">
@@ -10,8 +10,8 @@
                 <RadzenImage Path="@doctor.Photo" Class="rounded-circle float-left mr-3" Style="width: 5rem; height: 5rem;" />
                 <div style="padding: 0rem 1rem">
                     <h4 class="mb-0">@(doctor.FirstName + " " + doctor.LastName)</h4>
-                    <div>@("Years of Experience: " + doctor.YearsOfExperience)</div>
-                    <div style="font-size: .8em"> @("PhoneNumber: " + doctor.PhoneNumber)</div>
+                    <div>@("Años de experiencia: " + doctor.YearsOfExperience)</div>
+                    <div style="font-size: .8em"> @("Numero de telefono: " + doctor.PhoneNumber)</div>
                 </div>
             </div>
             <hr style="border: none; background-color: rgba(0,0,0,.08); height: 1px; margin: 1rem 0;" />

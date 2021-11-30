@@ -3,19 +3,19 @@
 </div>
 
 <div class="rz-sidebar" @onclick="ToggleNavMenu"
-    style="top: 51px; bottom: 0px; width: 250px;; transform: translateX(0px);">
-    <RadzenPanelMenu Style="width:250px">
+    style="top: 51px; bottom: 0px; width: 200px;; transform: translateX(0px);">
+    <RadzenPanelMenu Style="width:200px">
         <ul class="rz-panel-menu">
             <li class="rz-navigation-item">
                 <RadzenPanelMenuItem Text="Home" Icon="home" Path="/index" />
             </li>
-            <RadzenPanelMenuItem Text="Hospitals" Icon="local_hospital">
-                <RadzenPanelMenuItem Text="Hospitals" Path="hospitalgrid" Icon="local_hospital"></RadzenPanelMenuItem>
-                <RadzenPanelMenuItem Text="Requests" Path="hospitalrequest" Icon="fact_check"></RadzenPanelMenuItem>
-                <RadzenPanelMenuItem Text="Doctors" Path="doctorlist" Icon="medical_services"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Clínicas" Icon="local_hospital">
+                <RadzenPanelMenuItem Text="Registro de Clínicas" Path="hospitalgrid" Icon="local_hospital"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Solicitudes" Path="hospitalrequest" Icon="fact_check"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Doctores" Path="doctorlist" Icon="medical_services"></RadzenPanelMenuItem>
             </RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Users" Icon="person">
-                <RadzenPanelMenuItem Text="User Management" Path="usergrid" Icon="person"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Usuarios" Icon="person">
+                <RadzenPanelMenuItem Text="Administración de usuarios" Path="usergrid" Icon="person"></RadzenPanelMenuItem>
                 <RadzenPanelMenuItem Text="Analytics" Path="useranalytics" Icon="analytics"></RadzenPanelMenuItem>
             </RadzenPanelMenuItem>
         </ul>

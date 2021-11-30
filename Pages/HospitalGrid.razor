@@ -11,39 +11,39 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
 
-<h3>Register a new hospital</h3>
+<h3>Registrar nuevo hospital</h3>
 
 <RadzenTemplateForm TItem="Hospital" Data="@newHospital" Submit="@OnSubmit">
     <div class="row" style="text-align:center">
-        <h3 style="font-weight:bold; color:purple">Registro de nuevo hospital</h3>
+        <h3 style="font-weight:bold; color:darkslategrey">Registro de clínicas</h3>
     </div>
     <div class="row" style="justify-content:center">
         <div class="col-md-6">
-            <RadzenFieldset Text="Hospital Register form">
+            <RadzenFieldset Text=" ">
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="Hospital Name" />
+                        <RadzenLabel Text="Nombre de la clinica" />
                     </div>
                     <div class="col-md-8">
-                        <RadzenTextBox style="width: 100%;" Name="Name" Placeholder="Enter valid name" @bind-Value=@newHospital.Name />
-                        <RadzenRequiredValidator Component="Name" Text="Name is required" Style="position: absolute" />
+                        <RadzenTextBox style="width: 100%;" Name="Nombre de la clinica" Placeholder=" " @bind-Value=@newHospital.Name />
+                        <RadzenRequiredValidator Component="Nombre de la clinica" Text="Se requiere de un nombre" Style="position: absolute" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="Legal Entity Id" />
+                        <RadzenLabel Text="Cedula Fisica/Juridica" />
                     </div>
                     <div class="col-md-8">
                         <RadzenNumeric Name="LegalEntityId" ShowUpDown="false" TValue="int" @bind-Value=@newHospital.LegalEntityId Placeholder="Enter or clear value" />
-                        <RadzenRequiredValidator Component="LegalEntityId" Text="LegalEntityId is required" Style="position: absolute" />
+                        <RadzenRequiredValidator Component="LegalEntityId" Text="Se requiere un numero de cedula" Style="position: absolute" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="AddressLine" />
+                        <RadzenLabel Text="Dirección" />
                     </div>
                     <div class="col-md-8">
-                        <RadzenTextBox style="width: 100%;" Name="AddressLine" Placeholder="Enter valid AddressLine" @bind-Value=@newHospital.AddressLine />
+                        <RadzenTextBox style="width: 100%;" Name="AddressLine" Placeholder=" " @bind-Value=@newHospital.AddressLine />
                         <RadzenRequiredValidator Component="AddressLine" Text="AddressLine is required" Style="position: absolute" />
                     </div>
                 </div>
@@ -53,26 +53,26 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
-            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Guardar" />
         </div>
     </div>
 </RadzenTemplateForm>
 
-<h3>Hospitals Data Grid</h3>
+<h3>Lista de clínicas</h3>
 
 <RadzenDataGrid @ref="grid" AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
                 Data="@hospitals" TItem="Hospital" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
     <Columns>
         <RadzenDataGridColumn TItem="Hospital" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
-        <RadzenDataGridColumn TItem="Hospital" Title="Photo" Sortable="false" Filterable="false" Width="200px">
+        <RadzenDataGridColumn TItem="Hospital" Title="Foto" Sortable="false" Filterable="false" Width="200px">
             <Template Context="data">
                 <RadzenImage Path="@data.Photo" style="width: 40px; height: 40px; border-radius: 8px;" />
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="Hospital" Property="Name" Title="Name" />
-        <RadzenDataGridColumn TItem="Hospital" Property="LegalEntityId" Title="Legal Entity Id" Width="150px" />
-        <RadzenDataGridColumn TItem="Hospital" Property="AddressLine" Title="AddressLine" />
-        <RadzenDataGridColumn TItem="Hospital" Property="Status" Title="Status" />
+        <RadzenDataGridColumn TItem="Hospital" Property="Name" Title="Nombre" />
+        <RadzenDataGridColumn TItem="Hospital" Property="LegalEntityId" Title="Número de cédula" Width="150px" />
+        <RadzenDataGridColumn TItem="Hospital" Property="AddressLine" Title="Dirección" />
+        <RadzenDataGridColumn TItem="Hospital" Property="Status" Title="Estado" />
     </Columns>
 </RadzenDataGrid>
 

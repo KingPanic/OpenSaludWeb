@@ -7,15 +7,15 @@
     }
 </style>
 
-<h3>Manage requests</h3>
+<h3> </h3>
 
 <RadzenTemplateForm TItem="Request" Data="@_request" Submit="@OnSubmit">
     <div class="row" style="text-align:center">
-        <h3 style="font-weight:bold; color:purple">Aprobar registro de nuevo hospital</h3>
+        <h3 style="font-weight:bold; color:darkslategrey">Aprobar registro de clínica</h3>
     </div>
     <div class="row" style="justify-content:center">
         <div class="col-md-6">
-            <RadzenFieldset Text="Request Approval form">
+            <RadzenFieldset Text=" ">
 
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
@@ -31,7 +31,7 @@
                         <RadzenLabel Text="Comments" />
                     </div>
                     <div class="col-md-8">
-                        <RadzenTextBox style="width: 100%;" Name="Comments" Placeholder="Enter valid AddressLine" @bind-Value=@_request.Comments />
+                        <RadzenTextBox style="width: 100%;" Name="Comentarios" Placeholder=" " @bind-Value=@_request.Comments />
                         <RadzenRequiredValidator Component="Comments" Text="AddressLine is required" Style="position: absolute" />
                     </div>
                 </div>
@@ -46,16 +46,16 @@
     </div>
 </RadzenTemplateForm>
 
-<h3>Hospitals Data Grid</h3>
+<h3>Registro de Clínicas</h3>
 
 <RadzenDataGrid @ref="grid" AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
                 Data="@requests" TItem="Request" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
     <Columns>
         <RadzenDataGridColumn TItem="Request" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
-        <RadzenDataGridColumn TItem="Request" Property="PreciseTimestamp" Title="PreciseTimestamp" FormatString="{0:d}" />
-        <RadzenDataGridColumn TItem="Request" Property="IdHospital" Title="IdHospital" Width="150px" />
-        <RadzenDataGridColumn TItem="Request" Property="Comments" Title="AddressLine" />
-        <RadzenDataGridColumn TItem="Request" Property="Status" Title="Status" />
+        <RadzenDataGridColumn TItem="Request" Property="PreciseTimestamp" Title="Fecha" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Request" Property="IdHospital" Title="Clíica_ID" Width="150px" />
+        <RadzenDataGridColumn TItem="Request" Property="Comments" Title="Dirección" />
+        <RadzenDataGridColumn TItem="Request" Property="Status" Title="Estado" />
     </Columns>
 </RadzenDataGrid>
 @code {
@@ -67,8 +67,8 @@
     {
         requests = new List<Request>()
         {
-            new Request() { Id = 1, PreciseTimestamp = DateTime.Now, IdHospital = 7, Comments = "", Status = "Pending Approval" },
-            new Request() { Id = 2, PreciseTimestamp = DateTime.Now, IdHospital = 1, Comments = "Todo bien", Status = "Approved" },
+            new Request() { Id = 1, PreciseTimestamp = DateTime.Now, IdHospital = 7, Comments = "", Status = "Pendiente" },
+            new Request() { Id = 2, PreciseTimestamp = DateTime.Now, IdHospital = 1, Comments = "Todo bien", Status = "Aprovado" },
         };
 
         _request = new Request();
