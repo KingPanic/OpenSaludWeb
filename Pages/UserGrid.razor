@@ -7,11 +7,11 @@
     }
 </style>
 
-<h3>Manage usuarios</h3>
+<h3>Manejo de usuarios</h3>
 
 <RadzenTemplateForm TItem="User" Data="@_user" Submit="@OnSubmit">
     <div class="row" style="text-align:center">
-        <h3 style="font-weight:bold; color:purple">Administracion de Usuarios y Roles</h3>
+        <h3 style="font-weight:bold; color:darkslategrey">Administracion de Usuarios y Roles</h3>
     </div>
     <div class="row" style="justify-content:center">
         <div class="col-md-6">
@@ -19,29 +19,29 @@
 
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="Email Address" />
+                        <RadzenLabel Text="Correo Electrónico" />
                     </div>
                     <div class="col-md-8">
-                        <RadzenTextBox style="width: 100%;" Name="EmailAddress" Placeholder="Enter valid email address" @bind-Value=@_user.EmailAddress />
+                        <RadzenTextBox style="width: 100%;" Name="EmailAddress" Placeholder=" " @bind-Value=@_user.EmailAddress />
                         <RadzenRequiredValidator Component="EmailAddress" Text="Email Address is required" Style="position: absolute" />
                         <RadzenEmailValidator Component="EmailAddress" Text="Provide a valid email address" Style="position: absolute" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="First Name" />
+                        <RadzenLabel Text="Nombre" />
                     </div>
                     <div class="col-md-8">
-                        <RadzenTextBox style="width: 100%;" Name="FirstName" Placeholder="Enter valid FirstName" @bind-Value=@_user.FirstName />
+                        <RadzenTextBox style="width: 100%;" Name="FirstName" Placeholder=" " @bind-Value=@_user.FirstName />
                         <RadzenRequiredValidator Component="FirstName" Text="FirstName is required" Style="position: absolute" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="Last Name" />
+                        <RadzenLabel Text="Apellido" />
                     </div>
                     <div class="col-md-8">
-                        <RadzenTextBox style="width: 100%;" Name="LastName" Placeholder="Enter valid LastName" @bind-Value=@_user.LastName />
+                        <RadzenTextBox style="width: 100%;" Name="LastName" Placeholder="  " @bind-Value=@_user.LastName />
                         <RadzenRequiredValidator Component="LastName" Text="LastName is required" Style="position: absolute" />
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         <RadzenLabel Text="Role Id" />
                     </div>
                     <div class="col-md-8">
-                        <RadzenNumeric Name="RoleId" ShowUpDown="false" TValue="short?" @bind-Value=@_user.Role.RoleId Placeholder="Enter or clear value" />
+                        <RadzenNumeric Name="Rol ID" ShowUpDown="false" TValue="short?" @bind-Value=@_user.Role.RoleId Placeholder=" " />
                         <RadzenRequiredValidator Component="RoleId" Text="Id is required" Style="position: absolute" />
                     </div>
                 </div>
@@ -60,12 +60,12 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
-            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Guardar" />
         </div>
     </div>
 </RadzenTemplateForm>
 
-<h3>Users Data Grid</h3>
+<h3>Información de Usuarios</h3>
 
 <RadzenDataGrid @ref="grid" AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
                 Count="@users.Count" Data="@users" TItem="User" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
