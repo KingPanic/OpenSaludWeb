@@ -4,28 +4,27 @@
 
 
 <PageTitle>OpenSalud</PageTitle>
-<RadzenDialog />
-<RadzenNotification />
-<RadzenContextMenu />
-<RadzenTooltip />
-
 
 <div class="page">
     <AuthorizeView>
         <Authorized>
-            <div class="sidebar">
-                <NavMenu />
-            </div>
-            <main>
-                <div class="top-row px-4">
-                    <a href="/login" @onclick="( () => Logout() )">Logout</a>
-                    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <div style="display:flex">
+                <div class="sidebar col-3">
+                    <NavMenu />
                 </div>
+                <main class="col-9">
+                    <div class="top-row px-4">
+                        <a href="/login" @onclick="( () => Logout() )">Logout</a>
+                        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                    </div>
 
-                <article class="content px-4">
-                    @Body
-                </article>
-            </main>
+                    <article class="content px-4">
+                        @Body
+                    </article>
+                </main>
+            </div>
+            
+            
         </Authorized>
 
         <NotAuthorized>
