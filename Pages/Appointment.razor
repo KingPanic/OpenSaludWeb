@@ -1,0 +1,160 @@
+﻿@page "/cita"
+@inject NavigationManager NavigationManager
+
+@using OpenSalud.Data.Models
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+    fieldset {
+        margin-top: 1rem !important;
+    }
+</style>
+
+<h3>Solicitar una cita</h3>
+
+<RadzenTemplateForm TItem="Appointment" Data="@_appointment" Submit="@OnSubmitCita">
+    <div class="row">
+        <RadzenFieldset Text="Informacion de paciente">
+            <div class="row">
+                <div class="col-md-4 align-items-center d-flex">
+                    <RadzenLabel Text="Nombre" />
+                </div>
+                <div class="col-md-8">
+                    <RadzenTextBox style="width: 100%;" Name="Name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 align-items-center d-flex">
+                    <RadzenLabel Text="Apellido" />
+                </div>
+                <div class="col-md-8">
+                    <RadzenTextBox style="width: 100%;" Name="LastName" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 align-items-center d-flex">
+                    <RadzenLabel Text="Apellido" />
+                </div>
+                <div class="col-md-8">
+                    <RadzenTextBox style="width: 100%;" Name="LastName" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 align-items-center d-flex">
+                    <RadzenLabel Text="Telefono" />
+                </div>
+                <div class="col-md-8">
+                    <RadzenTextBox style="width: 100%;" Name="PhoneNumber" />
+                </div>
+            </div>
+        </RadzenFieldset>
+        <RadzenFieldset Text="Informacion de Cita">
+
+            <div class="row">
+                <div class="align-items-center d-flex col-md-3">
+                    <RadzenLabel Text="Elija una clinica" />
+                </div>
+                <div class="col-md-3">
+                    <RadzenDropDown AllowClear="true" TValue="string"
+                                    Data=@(hospitals.Select(h => $"{h.Name}")) />
+                </div>
+            </div>
+            <div class="row">
+                <div class="align-items-center d-flex col-md-3">
+                    <RadzenLabel Text="Elija un doctor" />
+                </div>
+                <div class="col-md-3">
+                    <RadzenDropDown AllowClear="true" TValue="string"
+                                    Data=@(doctors.Select(d => $"{d.FirstName} {d.LastName}")) />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="align-items-center d-flex col-md-3">
+                    <RadzenLabel Text="Fecha de cita" />
+                </div>
+                <div class="col-md-3">
+                    <RadzenDatePicker TValue="DateTime?" ShowTime="true" HoursStep="1.5" MinutesStep="5" DateFormat="MM/dd/yyyy HH:mm" />
+                </div>
+            </div>
+
+        </RadzenFieldset>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@OnCancel" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+
+@code {
+
+    private Appointment _appointment;
+    DateTime test = new DateTime();
+
+    List<Doctor> doctors;
+    List<Hospital> hospitals;
+
+    protected override void OnInitialized()
+    {
+        doctors = new List<Doctor>()
+        {
+            new Doctor() { Id = 1, FirstName = "Paco", LastName="Rodriguez", Photo = "/img/doctor1.png", IdHospital = 1, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Dermatologia" },  YearsOfExperience = 6 },
+            new Doctor() { Id = 2, FirstName = "Luis", LastName="Campos", Photo = "/img/doctor2.jpg", IdHospital = 1, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Odontologia" },  YearsOfExperience = 1 },
+            new Doctor() { Id = 3, FirstName = "Ana", LastName="Solis", Photo = "/img/doctor5.jpg", IdHospital = 2, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Neurocirugia" },  YearsOfExperience = 15 },
+            new Doctor() { Id = 4, FirstName = "Henry", LastName="Gutti", Photo = "/img/doctor3.png", IdHospital = 3, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Cardiologia" },  YearsOfExperience = 22 },
+            new Doctor() { Id = 5, FirstName = "Paul", LastName="Thompson", Photo = "/img/doctor4.jpg", IdHospital = 4, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Dermatologia" },  YearsOfExperience = 3 },
+
+        };
+
+        hospitals = new List<Hospital>()
+    {
+            new Hospital() { Id = 1, Name = "CIMA", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Escazu", Status = "Active"},
+            new Hospital() { Id = 2, Name = "Clinica Biblica", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Escazu", Status = "Active"},
+            new Hospital() { Id = 3, Name = "Hospital Mexico", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "San Jose", Status = "Active"},
+            new Hospital() { Id = 4, Name = "Hospital Monsenor Sanabria", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Puntarenas", Status = "Active"},
+            new Hospital() { Id = 5, Name = "Laboratorio Labin", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "San Jose", Status = "Active"},
+            new Hospital() { Id = 6, Name = "Hospital Metropolitano", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Santa Ana", Status = "Active"},
+
+
+        };
+
+        _appointment = new Appointment();
+    }
+
+    void OnSubmit(Appointment appt)
+    {
+
+        Console.WriteLine($"UserId: {_appointment}, Role: {appt}");
+
+        _appointment = new Appointment();
+
+    }
+
+    void OnSubmitCita(Appointment appt)
+    {
+
+        Console.WriteLine($"UserId: {_appointment}, Role: {appt}");
+
+        _appointment = new Appointment();
+        NavigationManager.NavigateTo("/index");
+
+    }
+
+
+    void OnCancel()
+    {
+
+        Console.WriteLine($"UserId: {_appointment}, Role: {_appointment}");
+
+        _appointment = new Appointment();
+        NavigationManager.NavigateTo("/index");
+
+    }
+
+
+
+}

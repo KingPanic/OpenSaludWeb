@@ -5,7 +5,7 @@
 
 <PageTitle>OpenSalud</PageTitle>
 
-<div class="page">
+<div>
     <AuthorizeView>
         <Authorized>
             <div style="display:flex">
@@ -13,11 +13,6 @@
                     <NavMenu />
                 </div>
                 <main class="col-9">
-                    <div class="top-row px-4">
-                        <a href="/login" @onclick="( () => Logout() )">Logout</a>
-                        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-                    </div>
-
                     <article class="content px-4">
                         @Body
                     </article>

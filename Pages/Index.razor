@@ -1,20 +1,40 @@
 ﻿@page "/Index"
 
+@inject NavigationManager NavigationManager
+
 <PageTitle>Index</PageTitle>
 
 
-<img src="/img/OpenSaludLogo.jpeg"  />
 
-<button type="button" class="btn btn-primary">Buscar doctores</button>
 
 
 <AuthorizeView>
-	<Authorized>
-			
-	</Authorized>
+    <Authorized>
+        <div style="display:flex; flex-direction:column">
+            <div class="row">
+                <img src="/img/OpenSaludLogo.jpeg" />
+            </div>
+            <div class="row" style="padding: 1rem 0rem; align-self: center">
+                <RadzenButton Click=@(args => OnClickDoctores()) Text="Buscar Doctores" ButtonStyle="ButtonStyle.Info" Style="margin:1rem; width:auto" />
+                <RadzenButton Click=@(args => OnClickClinica()) Text="Afiliar Clinica" ButtonStyle="ButtonStyle.Info" Style="margin:1rem; width:auto"/>
+            </div>
+        </div>
+    </Authorized>
 
-	<NotAuthorized>
-		<p>You are signed out !!</p>
-	</NotAuthorized>
+    <NotAuthorized>
+        <p>You are signed out !!</p>
+    </NotAuthorized>
 </AuthorizeView>
+
+@code {
+    void OnClickDoctores()
+    {
+        NavigationManager.NavigateTo("/doctorlist");
+    }
+
+    void OnClickClinica()
+    {
+        NavigationManager.NavigateTo("/hospitalgrid");
+    }
+}
 
