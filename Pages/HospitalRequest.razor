@@ -19,7 +19,7 @@
 
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="Request Id" />
+                        <RadzenLabel Text="Id Solicitud" />
                     </div>
                     <div class="col-md-8">
                         <RadzenNumeric Name="RequestId" ShowUpDown="false" TValue="int" @bind-Value=@_request.Id Placeholder="Enter or clear value" />
@@ -28,11 +28,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 align-items-center d-flex">
-                        <RadzenLabel Text="Comments" />
+                        <RadzenLabel Text="Comentarios" />
                     </div>
                     <div class="col-md-8">
                         <RadzenTextBox style="width: 100%;" Name="Comentarios" Placeholder=" " @bind-Value=@_request.Comments />
-                        <RadzenRequiredValidator Component="Comments" Text="AddressLine is required" Style="position: absolute" />
+                        <RadzenRequiredValidator Component="Comentarios" Text="AddressLine is required" Style="position: absolute" />
                     </div>
                 </div>
 
