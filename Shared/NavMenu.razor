@@ -1,0 +1,34 @@
+﻿<div class="rz-sidebar">
+
+</div>
+
+<div class="rz-sidebar" @onclick="ToggleNavMenu"
+    style="top: 51px; bottom: 0px; width: 250px;; transform: translateX(0px);">
+    <RadzenPanelMenu Style="width:250px">
+        <ul class="rz-panel-menu">
+            <li class="rz-navigation-item">
+                <RadzenPanelMenuItem Text="Home" Icon="home" Path="/index" />
+            </li>
+            <RadzenPanelMenuItem Text="Hospitals" Icon="local_hospital">
+                <RadzenPanelMenuItem Text="Hospitals" Path="hospitalgrid" Icon="local_hospital"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Requests" Path="hospitalrequest" Icon="fact_check"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Doctors" Path="doctorlist" Icon="medical_services"></RadzenPanelMenuItem>
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Users" Icon="person">
+                <RadzenPanelMenuItem Text="User Management" Path="usergrid" Icon="person"></RadzenPanelMenuItem>
+                <RadzenPanelMenuItem Text="Analytics" Path="useranalytics" Icon="analytics"></RadzenPanelMenuItem>
+            </RadzenPanelMenuItem>
+        </ul>
+    </RadzenPanelMenu>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

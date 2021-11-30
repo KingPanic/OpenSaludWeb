@@ -1,0 +1,136 @@
+﻿@page "/usergrid"
+
+@using OpenSalud.Data.Models
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+
+<h3>Manage users</h3>
+
+<RadzenTemplateForm TItem="User" Data="@_user" Submit="@OnSubmit">
+    <div class="row" style="text-align:center">
+        <h3 style="font-weight:bold; color:purple">Administracion de Usuarios y Roles</h3>
+    </div>
+    <div class="row" style="justify-content:center">
+        <div class="col-md-6">
+            <RadzenFieldset Text="Crear un nuevo usuario">
+
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Email Address" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="EmailAddress" Placeholder="Enter valid email address" @bind-Value=@_user.EmailAddress />
+                        <RadzenRequiredValidator Component="EmailAddress" Text="Email Address is required" Style="position: absolute" />
+                        <RadzenEmailValidator Component="EmailAddress" Text="Provide a valid email address" Style="position: absolute" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="First Name" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="FirstName" Placeholder="Enter valid FirstName" @bind-Value=@_user.FirstName />
+                        <RadzenRequiredValidator Component="FirstName" Text="FirstName is required" Style="position: absolute" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Last Name" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="LastName" Placeholder="Enter valid LastName" @bind-Value=@_user.LastName />
+                        <RadzenRequiredValidator Component="LastName" Text="LastName is required" Style="position: absolute" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Role Id" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenNumeric Name="RoleId" ShowUpDown="false" TValue="short?" @bind-Value=@_user.Role.RoleId Placeholder="Enter or clear value" />
+                        <RadzenRequiredValidator Component="RoleId" Text="Id is required" Style="position: absolute" />
+                    </div>
+                </div>
+
+            </RadzenFieldset>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+<h3>Users Data Grid</h3>
+
+<RadzenDataGrid @ref="grid" AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
+                Count="@users.Count" Data="@users" TItem="User" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="User" Property="Id" Filterable="false" Title="UserId" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="User" Property="EmailAddress" Title="EmailAddress" />
+        <RadzenDataGridColumn TItem="User" Property="FirstName" Title="FirstName" />
+        <RadzenDataGridColumn TItem="User" Property="LastName" Title="LastName" />
+        <RadzenDataGridColumn TItem="User" Property="Role.RoleDesc" Title="Role" />
+    </Columns>
+</RadzenDataGrid>
+@code {
+    List<User> users;
+    private User _user;
+    RadzenDataGrid<User> grid;
+
+    Role Admin = new Role() { RoleId = 1, RoleDesc = "Admin" };
+    Role AdminSecundario = new Role() { RoleId = 2, RoleDesc = "AdminSecundario" };
+    Role Usuario = new Role() { RoleId = 3, RoleDesc = "Usuario" };
+
+    protected override void OnInitialized()
+    {
+        users = new List<User>()
+{
+            new User() { Id = 1, EmailAddress = "admin@gmail.com", FirstName = "Paco", LastName="Rodriguez", Role = Admin },
+            new User() { Id = 2, EmailAddress = "adminsecundario@gmail.com", FirstName = "Liusa", LastName = "Maria", Role = AdminSecundario },
+            new User() { Id = 3, EmailAddress = "usuario@gmail.com", FirstName = "Reina", LastName = "Solis", Role = Usuario },
+
+        };
+
+        _user = new User();
+        _user.Role = new Role();
+    }
+
+    void OnSubmit(User user)
+    {
+        switch(_user.Role.RoleId)
+        {
+            case 1:
+                _user.Role = Admin;
+                break;
+            case 2:
+                _user.Role = AdminSecundario;
+                break;
+            case 3:
+                _user.Role = Usuario;
+                break;
+            default:
+                _user.Role = Usuario;
+                break;
+        }
+
+
+
+        int newId = users.Max(u => u.Id);
+        _user.Id = newId;
+        users.Add(_user);
+        grid.Reload();
+        Console.WriteLine($"UserId: {_user.Id}, Role: {_user.Role.RoleDesc}");
+
+        _user = new User();
+        _user.Role = new Role();
+
+    }
+
+
+
+}

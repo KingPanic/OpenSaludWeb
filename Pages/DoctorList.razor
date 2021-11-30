@@ -1,0 +1,56 @@
+﻿@page "/doctorlist"
+@using OpenSalud.Data.Models
+
+<h3>DoctorList</h3>
+
+<RadzenDataList @ref="grid" WrapItems="true" AllowPaging="true" Data="@doctors" TItem="Doctor" PageSize="6">
+    <Template Context="doctor">
+        <RadzenCard Style="width:300px;">
+            <div class="d-flex flex-row align-items-center">
+                <RadzenImage Path="@doctor.Photo" Class="rounded-circle float-left mr-3" Style="width: 5rem; height: 5rem;" />
+                <div style="padding: 0rem 1rem">
+                    <h4 class="mb-0">@(doctor.FirstName + " " + doctor.LastName)</h4>
+                    <div>@("Years of Experience: " + doctor.YearsOfExperience)</div>
+                    <div style="font-size: .8em"> @("PhoneNumber: " + doctor.PhoneNumber)</div>
+                </div>
+            </div>
+            <hr style="border: none; background-color: rgba(0,0,0,.08); height: 1px; margin: 1rem 0;" />
+            <div class="row" >
+                <div class="col-md-8 text-truncate" style="padding: 0rem 1rem">
+                    <b>@(doctor.Specialty.SpecialtyName)</b>
+                </div>
+                <div class="col-md-4 text-right">
+                    <RadzenBadge BadgeStyle="BadgeStyle.Info" IsPill="true" Text="5 Stars" />
+                </div>
+            </div>
+        </RadzenCard>
+    </Template>
+</RadzenDataList>
+
+
+@code {
+    List<Doctor> doctors;
+    RadzenDataList<Doctor> grid;
+
+    protected override void OnInitialized()
+    {
+        doctors = new List<Doctor>()
+{
+            new Doctor() { Id = 1, FirstName = "Paco", LastName="Rodriguez", Photo = "/img/doctor1.png", IdHospital = 1, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Dermatologia" },  YearsOfExperience = 6 },
+            new Doctor() { Id = 2, FirstName = "Luis", LastName="Campos", Photo = "/img/doctor2.jpg", IdHospital = 1, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Odontologia" },  YearsOfExperience = 1 },
+            new Doctor() { Id = 3, FirstName = "Ana", LastName="Solis", Photo = "/img/doctor5.jpg", IdHospital = 2, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Neurocirugia" },  YearsOfExperience = 15 },
+            new Doctor() { Id = 4, FirstName = "Henry", LastName="Gutti", Photo = "/img/doctor3.png", IdHospital = 3, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Cardiologia" },  YearsOfExperience = 22 },
+            new Doctor() { Id = 5, FirstName = "Paul", LastName="Thompson", Photo = "/img/doctor4.jpg", IdHospital = 4, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Dermatologia" },  YearsOfExperience = 3 },
+            
+            new Doctor() { Id = 1, FirstName = "Paco", LastName="Rodriguez", Photo = "/img/doctor1.png", IdHospital = 1, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Dermatologia" },  YearsOfExperience = 6 },
+            new Doctor() { Id = 2, FirstName = "Luis", LastName="Campos", Photo = "/img/doctor2.jpg", IdHospital = 1, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Odontologia" },  YearsOfExperience = 1 },
+            new Doctor() { Id = 3, FirstName = "Ana", LastName="Solis", Photo = "/img/doctor5.jpg", IdHospital = 2, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Neurocirugia" },  YearsOfExperience = 15 },
+            new Doctor() { Id = 4, FirstName = "Henry", LastName="Gutti", Photo = "/img/doctor3.png", IdHospital = 3, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Cardiologia" },  YearsOfExperience = 22 },
+            new Doctor() { Id = 5, FirstName = "Paul", LastName="Thompson", Photo = "/img/doctor4.jpg", IdHospital = 4, PhoneNumber = "8888-9999", Specialty = new Specialty(){Id = 1, SpecialtyName = "Dermatologia" },  YearsOfExperience = 3 },
+
+        };
+
+    }
+
+
+}

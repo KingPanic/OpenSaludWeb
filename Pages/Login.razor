@@ -1,0 +1,90 @@
+﻿@layout LoginLayout
+@page  "/"
+@page  "/login"
+@using OpenSalud.Data
+@using OpenSalud.Data.Models
+@using Newtonsoft.Json
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject HttpClient HttpClient
+
+<center>
+
+    <div class="col-12 row">
+        <div class="col-6" style="border-right:groove">
+            <img src="/img/OpenSaludLogo.jpg" width="400px" height="400px" />
+        </div>
+        <div class="col-6" style="border-left:groove">
+            <div>
+                <br /><br /><br />
+            </div>
+            <div>
+                <h3 style="font-weight:bold; color:purple">MediSalud Login</h3>
+            </div>
+            <div>
+                <br />
+            </div>
+            <RadzenCard>
+                <RadzenTemplateForm Data="@user">
+                    <RadzenLogin Login=@OnLogin
+                                 ResetPassword=@OnResetPassword
+                                 Register=@OnRegister Style="margin-bottom: 20px;" />
+                </RadzenTemplateForm>
+            </RadzenCard>
+        </div>
+    </div>
+</center>
+
+
+
+@code {
+
+    private User user;
+    //public string LoginMesssage { get; set; }
+    //ClaimsPrincipal claimsPrincipal;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        user = new User();
+        return base.OnInitializedAsync();
+
+    }
+
+    private async Task<bool> ValidateUser()
+    {
+        //assume that user is valid
+        //call an API
+
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(user.EmailAddress);
+        NavigationManager.NavigateTo("/index");
+
+        await sessionStorage.SetItemAsync("emailAddress", user.EmailAddress);
+
+        return await Task.FromResult(true);
+    }
+
+    private async Task<bool> OnLogin(LoginArgs args)
+    {
+        Console.WriteLine($"Username: {args.Username} and password: {args.Password}");
+        user.EmailAddress = args.Username;
+        user.Password = args.Password;
+        return await ValidateUser();
+    }
+
+    void OnRegister()
+    {
+        Console.WriteLine($"Register");
+        NavigationManager.NavigateTo("/signup");
+    }
+
+    void OnResetPassword()
+    {
+        Console.WriteLine($"ResetPassword for user");
+    }
+
+}

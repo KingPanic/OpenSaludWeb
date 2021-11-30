@@ -1,0 +1,117 @@
+﻿@page "/hospitalgrid"
+
+@using OpenSalud.Data.Models
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+
+<h3>Register a new hospital</h3>
+
+<RadzenTemplateForm TItem="Hospital" Data="@newHospital" Submit="@OnSubmit">
+    <div class="row" style="text-align:center">
+        <h3 style="font-weight:bold; color:purple">Registro de nuevo hospital</h3>
+    </div>
+    <div class="row" style="justify-content:center">
+        <div class="col-md-6">
+            <RadzenFieldset Text="Hospital Register form">
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Hospital Name" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Name" Placeholder="Enter valid name" @bind-Value=@newHospital.Name />
+                        <RadzenRequiredValidator Component="Name" Text="Name is required" Style="position: absolute" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Legal Entity Id" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenNumeric Name="LegalEntityId" ShowUpDown="false" TValue="int" @bind-Value=@newHospital.LegalEntityId Placeholder="Enter or clear value" />
+                        <RadzenRequiredValidator Component="LegalEntityId" Text="LegalEntityId is required" Style="position: absolute" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="AddressLine" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="AddressLine" Placeholder="Enter valid AddressLine" @bind-Value=@newHospital.AddressLine />
+                        <RadzenRequiredValidator Component="AddressLine" Text="AddressLine is required" Style="position: absolute" />
+                    </div>
+                </div>
+
+            </RadzenFieldset>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+<h3>Hospitals Data Grid</h3>
+
+<RadzenDataGrid @ref="grid" AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
+                Data="@hospitals" TItem="Hospital" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="Hospital" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="Hospital" Title="Photo" Sortable="false" Filterable="false" Width="200px">
+            <Template Context="data">
+                <RadzenImage Path="@data.Photo" style="width: 40px; height: 40px; border-radius: 8px;" />
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Hospital" Property="Name" Title="Name" />
+        <RadzenDataGridColumn TItem="Hospital" Property="LegalEntityId" Title="Legal Entity Id" Width="150px" />
+        <RadzenDataGridColumn TItem="Hospital" Property="AddressLine" Title="AddressLine" />
+        <RadzenDataGridColumn TItem="Hospital" Property="Status" Title="Status" />
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    List<Hospital> hospitals;
+    private Hospital newHospital;
+    RadzenDataGrid<Hospital> grid;
+
+    protected override void OnInitialized()
+    {
+        hospitals = new List<Hospital>()
+    {
+            new Hospital() { Id = 1, Name = "CIMA", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Escazu", Status = "Active"},
+            new Hospital() { Id = 2, Name = "Clinica Biblica", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Escazu", Status = "Active"},
+            new Hospital() { Id = 3, Name = "Hospital Mexico", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "San Jose", Status = "Active"},
+            new Hospital() { Id = 4, Name = "Hospital Monsenor Sanabria", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Puntarenas", Status = "Active"},
+            new Hospital() { Id = 5, Name = "Laboratorio Labin", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "San Jose", Status = "Active"},
+            new Hospital() { Id = 6, Name = "Hospital Metropolitano", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Santa Ana", Status = "Active"},
+            new Hospital() { Id = 7, Name = "CIMA", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Escazu", Status = "Active"},
+            new Hospital() { Id = 8, Name = "Clinica Biblica", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Escazu", Status = "Active"},
+            new Hospital() { Id = 9, Name = "Hospital Mexico", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "San Jose", Status = "Active"},
+            new Hospital() { Id = 10, Name = "Hospital Monsenor Sanabria", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Puntarenas", Status = "Active"},
+            new Hospital() { Id = 11, Name = "Laboratorio Labin", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "San Jose", Status = "Active"},
+            new Hospital() { Id = 12, Name = "Hospital Metropolitano", Photo = "/img/HospitalCima.jpg", LegalEntityId = 123, AddressLine = "Santa Ana", Status = "Active"},
+
+
+        };
+
+        newHospital = new Hospital();
+    }
+
+    void OnSubmit(Hospital hospital)
+    {
+        Console.WriteLine($"Submit: {hospital.Name}, Status: {hospital.Status}");
+        newHospital.Status = "Pending Approval";
+        hospitals.Add(newHospital);
+        grid.Reload();
+
+        newHospital = new Hospital();
+    }
+
+}

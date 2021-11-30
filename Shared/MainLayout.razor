@@ -1,0 +1,52 @@
+﻿@using OpenSalud.Data
+@inherits LayoutComponentBase
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+<PageTitle>OpenSalud</PageTitle>
+<RadzenDialog />
+<RadzenNotification />
+<RadzenContextMenu />
+<RadzenTooltip />
+
+
+<div class="page">
+    <AuthorizeView>
+        <Authorized>
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+            <main>
+                <div class="top-row px-4">
+                    <a href="/login" @onclick="( () => Logout() )">Logout</a>
+                    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                </div>
+
+                <article class="content px-4">
+                    @Body
+                </article>
+            </main>
+        </Authorized>
+
+        <NotAuthorized>
+            <main>
+                <div class="top-row px-4">
+                    <a href="/login">Login</a>
+                    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                </div>
+
+            </main>
+        </NotAuthorized>
+    </AuthorizeView>
+    
+</div>
+
+
+@code{
+    public void Logout()
+    {
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+
+    }
+
+}

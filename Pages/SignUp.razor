@@ -1,0 +1,132 @@
+﻿@layout LoginLayout
+@page  "/signup"
+@using OpenSalud.Data
+@using OpenSalud.Data.Models
+@using Newtonsoft.Json
+@using System.Security.Claims
+@using System.Text.Json
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+@if (user == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <RadzenTemplateForm TItem="User" Data="@user" Submit="@OnSubmit">
+        <div class="row" style="text-align:center">
+            <h3 style="font-weight:bold; color:purple">MediSalud Registro</h3>
+        </div>
+        <div class="row" style="justify-content:center">
+            <div class="col-md-6">
+                <RadzenFieldset Text="Register form">
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Email Address" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="EmailAddress" Placeholder="Enter valid email address" @bind-Value=@user.EmailAddress />
+                            <RadzenRequiredValidator Component="EmailAddress" Text="Email Address is required" Style="position: absolute" />
+                            <RadzenEmailValidator Component="EmailAddress" Text="Provide a valid email address" Style="position: absolute" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Password" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenPassword style="width: 100%;" Name="Password" Placeholder="Enter password..."  @bind-Value=@user.Password/>
+                            <RadzenRequiredValidator Component="Password" Text="Password is required" Style="position: absolute" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Repeat password" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenPassword style="width: 100%;" Name="RepeatPassword" Placeholder="Enter password again..."  @bind-Value=@user.ConfirmPassword />
+                            <RadzenRequiredValidator Component="RepeatPassword" Text="Password is required" Style="position: absolute" />
+                            <RadzenCompareValidator Visible=@(!string.IsNullOrEmpty(user.ConfirmPassword)) Value=@user.Password Component="RepeatPassword" Text="Passwords should be the same" Style="position: absolute" />
+                        </div>
+                    </div>
+
+                </RadzenFieldset>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
+
+@code {
+
+    private User user;
+
+    //public string LoginMesssage { get; set; }
+    //ClaimsPrincipal claimsPrincipal;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        user = new User();
+        return base.OnInitializedAsync();
+
+    }
+
+    private async Task<bool> ValidateUser()
+    {
+        //assume that user is valid
+        //call an API
+
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(user.EmailAddress);
+        NavigationManager.NavigateTo("/index");
+
+        await sessionStorage.SetItemAsync("emailAddress", user.EmailAddress);
+
+        return await Task.FromResult(true);
+    }
+
+    private async Task<bool> OnLogin(LoginArgs args)
+    {
+        Console.WriteLine($"Username: {args.Username} and password: {args.Password}");
+        user.EmailAddress = args.Username;
+        user.Password = args.Password;
+        return await ValidateUser();
+    }
+
+
+    void Cancel()
+    {
+        Console.WriteLine($"Cancel");
+    }
+
+    void OnSubmit(User user)
+    {
+        Console.WriteLine($"Submit: {user}");
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(user.EmailAddress);
+        NavigationManager.NavigateTo("/index");
+    }
+
+    void OnInvalidSubmit(FormInvalidSubmitEventArgs args)
+    {
+        Console.WriteLine($"InvalidSubmit: {args}");
+    }
+
+
+
+}

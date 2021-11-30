@@ -1,0 +1,86 @@
+﻿@page "/useranalytics"
+
+@using OpenSalud.Data.Models
+<style>
+    form .row {
+        margin-bottom: 16px;
+    }
+</style>
+
+<h3>Manage requests</h3>
+
+<RadzenTemplateForm TItem="Request" Data="@_request" Submit="@OnSubmit">
+    <div class="row" style="text-align:center">
+        <h3 style="font-weight:bold; color:purple">Aprobar registro de nuevo hospital</h3>
+    </div>
+    <div class="row" style="justify-content:center">
+        <div class="col-md-6">
+            <RadzenFieldset Text="Request Approval form">
+
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Request Id" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenNumeric Name="RequestId" ShowUpDown="false" TValue="int" @bind-Value=@_request.Id Placeholder="Enter or clear value" />
+                        <RadzenRequiredValidator Component="RequestId" Text="Id is required" Style="position: absolute" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 align-items-center d-flex">
+                        <RadzenLabel Text="Comments" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenTextBox style="width: 100%;" Name="Comments" Placeholder="Enter valid AddressLine" @bind-Value=@_request.Comments />
+                        <RadzenRequiredValidator Component="Comments" Text="AddressLine is required" Style="position: absolute" />
+                    </div>
+                </div>
+
+            </RadzenFieldset>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+<h3>Hospitals Data Grid</h3>
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
+                Data="@requests" TItem="Request" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="Request" Property="Id" Filterable="false" Title="ID" Frozen="true" Width="70px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn TItem="Request" Property="PreciseTimestamp" Title="PreciseTimestamp" FormatString="{0:d}" />
+        <RadzenDataGridColumn TItem="Request" Property="IdHospital" Title="IdHospital" Width="150px" />
+        <RadzenDataGridColumn TItem="Request" Property="Comments" Title="AddressLine" />
+        <RadzenDataGridColumn TItem="Request" Property="Status" Title="Status" />
+    </Columns>
+</RadzenDataGrid>
+@code {
+    List<Request> requests;
+    private Request _request;
+
+    protected override void OnInitialized()
+    {
+        requests = new List<Request>()
+    {
+            new Request() { Id = 1, PreciseTimestamp = DateTime.Now, IdHospital = 7, Comments = "", Status = "Pending Approval" },
+            new Request() { Id = 2, PreciseTimestamp = DateTime.Now, IdHospital = 1, Comments = "Todo bien", Status = "Approved" },
+        };
+
+        _request = new Request();
+    }
+
+    void OnSubmit(Request request)
+    {
+        Console.WriteLine($"Submit: {request.Id}, Status: {request.Status}");
+        _request.Status = "Approve";
+        requests.ForEach(req => { if (req.Id == request.Id) { req.Status = "Approved"; req.Comments = request.Comments; } });
+
+        _request = new Request();
+
+    }
+
+}
